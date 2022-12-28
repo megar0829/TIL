@@ -94,6 +94,8 @@ git remote add origin URL
 * 원격 저장소 삭제
 ```bash
 git remote rm <원격저장소> 
+
+git remote origin
 ```
 
 * 로컬 저장소의 버전을 원격 저장소로 보내기
