@@ -46,6 +46,24 @@
 	  - Staged : Changes to be committed (2통)
   - Untracked : 버전으로 관리된적 없는 파일 상태 (파일을 새로 만든 경우)
 
+- add, commit 취소
+  - add 취소
+    1통에 있는 파일을 1통에서 없앤다 (가장 최신 상태의 파일로 돌아간다)
+    ```bash
+    git restore '파일명'
+    ```
+  - commit 취소
+    add 해서 2통에 저장한 파일을 다시 1통으로 보낸다
+    stage 된 파일을 다시 untracked 상태로 변경
+    ```bash
+    git restore --staged '파일명'
+    ```  
+  - 커밋 메세지 수정
+    `커밋의 해시값이 달라지기 때문에 안하는게 좋다`
+    ```bash
+    git commit --amend
+    ```
+
 >### 버전 기록 요약
   1. 파일을 작성(작업) : 1통 
   2. git add 로 Staging Area에 모으기 : 2통 
@@ -71,51 +89,94 @@
 
 >### 원격저장소(Remote Repository) 활용  => github
 
-로컬 저장소의 버전을 원격저장소로 보낸다.
+- 로컬 저장소의 버전을 원격저장소로 보낸다.
 ```bash
 git push
 ```
 
-원격저장소의 버전을 로컬 저장소로 가져온다.
+- 원격저장소의 버전을 로컬 저장소로 가져온다.
 ```bash
 git pull
 ```
 
-원격 저장소의 정보 확인
+- 원격 저장소의 정보 확인
 ```bash
 git remote -v
 ```
 
-로컬 저장소에 원격 저장소 정보 설정하기
+- 로컬 저장소에 원격 저장소 정보 설정하기
 ```bash
-git remote add origin 저장소 주소 URL
+ git remote add origin '저장소' '주소 URL'
 (원격저장소)(추가해)(Origin 으로)
 ```
 
-원격 저장소로 로컬 저장소 변경 사항(커밋)을 올림 (Push)
+- 로컬 저장소에 지정된 원격 저장소 삭제
+```bash
+git remote rm '원격저장소'
+```
+
+- 원격 저장소로 로컬 저장소 변경 사항(커밋)을 올림 (Push)
 ```bash
 git push origin master
 ```
-원격 저장소로부터 변경된 내역을 받아와서 이력을 병합함 
+- 원격 저장소로부터 변경된 내역을 받아와서 이력을 병합함 
 => 원격 저장소가 로컬보다 더 많은 정보를 가지고 있을경우 파일을 가져올 수있음
 ```bash
 git pull origin master
 ```
-- 명령어 정리
+
+- 원격 저장소 복제 (바탕화면에 git bash를 열고 코드 입력)
 ```bash
-git clone URL : 원격 저장소 복제
-git remote -v : 원격저장소 정보 확인
-git remote add <원격저장소> URL : 원격저장소 추가 (일반적으로 origin)
-git remote rm <원격저장소> : 원격저장소 삭제
-git push <원격저장소> <브랜치> : 원격저장소에 push
-git pull <원격저장소> <브랜치> : 원격저장소로부터 pull
+git clone URL 
 ```
 
 `파일을 작성하고 add 까지만 해도 push는 안된다. 파일을 올리는 것이 아니라 커밋을 올리는것이다. 꼭 커밋까지 하기!!`
 
-### gitignore 
-- 버전관리랑 상관없는 파일들을 무시하다.
-- .gitignore 라는 파일을 만든 후 함께 관리하지 않을 파일이나 폴더, 파일형식 등을 제외할 수 있다.
-- ex) 파일명, 폴더명/, *.확장자
+- ### gitignore 
+  - 버전관리랑 상관없는 파일들을 무시하다.
+  - .gitignore 라는 파일을 만든 후 함께 관리하지 않을 파일이나 폴더, 파일형식 등을 제외할 수 있다.
+  - ex) 파일명, 폴더명/, *.확장자
 
 `이전에 커밋된 파일은 무시할 수 없으니 처음부터 .gitignore를 만들어서 설정하자 commit history 는  되도록이면 바꾸지 말자 `
+
+- 브랜치 생성
+```bash
+git branch {branch name}
+```
+
+- 브랜치 이동
+```bash
+git checkout {branch name}
+```
+
+- 브랜치 생성 및 이동
+```bash
+git checkout-b {branch name}
+```
+
+- 브랜치 목록
+```bash
+git branch
+```
+
+- 브랜치 삭제
+```bash
+git branch -d {branch name}
+```
+
+- ### Local (혼자서 작업)
+```
+1. 브런치 만들고
+2. 작업
+3. 커밋
+4. 로컬에서 마스터 이동 병합
+```
+- ### github flow (실제 협업)
+```
+1. 브런치 만들고
+2. 작업
+3. 커밋
+4. github으로 브랜치 push
+5. pull request 생성  pull을 요청(이거좀 가져가줘)
+6. 코드 리뷰 후 merge  
+```
